@@ -1,0 +1,56 @@
+---
+title: "Assignment 4"
+author: "Matt Rega"
+date: "September 22, 2017"
+output: html_document
+---
+
+##Number 1
+#Install the fivethirtyeight package
+```{r}
+library(fivethirtyeight)
+#install.packages("fivethirtyeight")
+#install.packages("devtools")
+```
+
+#Assign the eighteenth data set to the object df
+```{r}
+df<-college_recent_grads
+```
+
+#Write out the URL in a comment to the related news story
+```{r}
+vignette("fivethirtyeight",package = "fivethirtyeight")
+```
+http://fivethirtyeight.com/features/the-economic-guide-to-picking-a-college-major/
+
+#Using R command give the dimensions and column names of this data frame
+```{r}
+dim(df) #dimensions of data frame
+names(df) #column names of data frame
+```
+
+##Number 2
+#Give the column names of the data frame. Right after that, write one that counts the number of columns but not rows
+```{r}
+names(df) #names of columns
+ncol(df) #number of columns
+```
+
+#Generate a count of each unique major_category in the data frame
+```{r}
+major_count<-as.data.frame(table(df$major_category))
+```
+
+#Make a bar graph of major category
+```{r}
+par(las=2)
+barplot(major_count$Freq,main="Major Degree Areas",horiz=TRUE, col=2, xlab="Number of Students",names.arg = major_count$Var1)
+```
+
+#Write the data frame to a csv file
+```{r}
+write.csv(df,file="College Recent Grads")
+```
+##Number3
+https://github.com/mrega1/SMU-MSDS
