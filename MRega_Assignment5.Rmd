@@ -1,0 +1,80 @@
+---
+title: "Assignment5"
+author: "Matt Rega"
+date: "September 29, 2017"
+output: html_document
+---
+
+##Number 1
+#Import yob2016 and make readable/useable
+```{r}
+library(reshape2)
+df<-read.table("yob2016.txt")
+df<-colsplit(df$V1,";",names=c("First Name","Gender","Number of Children"))
+```
+
+#Display the summary and structure of df
+```{r}
+summary(df)
+head(df,10)
+```
+
+#Find which name is misspelled
+```{r}
+df[grep('yyy',df$`First Name`),]
+```
+
+#Remove misspelled observation and save dataset to y2016
+```{r}
+y2016<-df[-212,]
+```
+
+##Number 2
+#Import yob2015 and make readable/useable
+```{r}
+y2015<-read.table("yob2015.txt")
+y2015<-colsplit(y2015$V1,",",names=c("First Name","Gender","Number of Children"))
+```
+
+#Display the last ten rows
+```{r}
+tail(y2015,10)
+```
+All ten entries are males and were used 5 times
+
+#Merge y2016 and y2015 by first name and assign it to final. Only include names who have data for both years
+```{r}
+final<-merge(y2016,y2015,by="First Name")
+head(final,10)
+```
+
+##Number 3
+#Create a column that adds the amount for both years.
+```{r}
+name_total<-final$`Number of Children.x`+final$`Number of Children.y`
+final<-cbind(final,name_total)
+final<-final[,-2]
+names(final)<-c("First Name","Number of Children 2016","Gender","Number of Children 2015","Number of Children Past Two Years")
+final<-final[c("First Name","Gender","Number of Children 2015","Number of Children 2016","Number of Children Past Two Years")]
+head(final,10)
+```
+
+#Sort the data by total. What are the top 10 most popular names?
+```{r}
+final<-final[order(-final$`Number of Children Past Two Years`),]
+head(final,10)
+```
+
+#Omit boys names and give top 10 girl names and assign to object girl
+```{r}
+girl<-final[which(final$Gender=="F"),]
+girl<-girl[order(-girl$`Number of Children Past Two Years`),]
+head(girl,10)
+```
+
+#Export these ten names to a cvs without headers
+```{r}
+mydata<-head(girl,10)
+mydata<-mydata[c("First Name","Number of Children Past Two Years")]
+write.table(mydata,file="Baby_Names.csv",col.names = FALSE,row.names = FALSE,sep=",")
+```
