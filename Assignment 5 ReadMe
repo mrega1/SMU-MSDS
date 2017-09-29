@@ -1,0 +1,1 @@
+This assignment starts with a list of baby names and how many children where named those in 2015 and 2016. This R markdown file cleans up each data set and merges them. It then sums the total children named that specific name in 2015 and 2016 then finds the ten most popular names. After this it omits the boy names and writes a csv file of the top ten most used girl names.
