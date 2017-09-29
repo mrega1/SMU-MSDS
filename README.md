@@ -8,7 +8,5 @@ The topics covered in this repo are:
 Sources for this repo are:
   fivethirtyeight data set (homework 4)
   
-  
- Assignment 5
-      Creates a list of the ten most popular girl baby names in 2015 and 2016
+
   
